@@ -1,5 +1,6 @@
 # create board
 import numpy as np
+from ..evaluation.evaluate import evaluate
 
 class BoardInit():
     """
@@ -37,6 +38,12 @@ class BoardInit():
             queens = []
 
             for j in range(self.num_queen):
+                queen = int(np.random.rand()*self.num_queen)
+                queens.append(queen)
+            gene.append(queens)
+            gene.append(evaluate(queens))
+            genes.append(gene)
 
+        return genes
 
 
