@@ -34,28 +34,28 @@ def evaluate(gene, num_queen=8):
             vertical = i + j
             horizontal = queen + j
 
-            if (vertical < num_queen) and (horizontal < num_queen) and \
-             (board[vertical][horizontal] == 1):
-                value += 1
+            if (vertical < num_queen) and (horizontal < num_queen):
+                if (board[vertical][horizontal] == 1) and (j != 0):
+                    value += 1
 
             vertical = i - j
             horizontal = queen - j
 
-            if (vertical > -1) and (horizontal > -1) and \
-            (board[vertical][horizontal] == 1):
-                value += 1
+            if (vertical > -1) and (horizontal > -1):
+                if (board[vertical][horizontal] == 1) and (j != 0):
+                    value += 1
 
             vertical = i - j
             horizontal = queen + j
 
-            if (vertical > -1) and (horizontal < num_queen) and \
-            (board[vertical][horizontal] == 1):
-                value += 1
+            if (vertical > -1) and (horizontal < num_queen):
+                if (board[vertical][horizontal] == 1) and (j != 0):
+                    value += 1
 
             vertical = i + j
             horizontal = queen - j
 
-            if (vertical < num_queen) and (horizontal > -1) and \
-            (board[vertical][horizontal] == 1):
-                value += 1
+            if (vertical < num_queen) and (horizontal > -1):
+                if (board[vertical][horizontal] == 1) and (j != 0):
+                    value += 1
     return value
