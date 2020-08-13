@@ -3,6 +3,7 @@ import argparse
 import copy
 import mlflow
 import numpy as np
+import random
 import sys
 sys.path.append('..')
 from utils.BoardInit import BoardInit
@@ -24,6 +25,7 @@ def make_parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('--nq', type=int, default=8, help='the numbers of queens')
     parser.add_argument('--ng', type=int, default=50, help='the numbers of genes')
+    parser.add_argument('--seed', type=int, default=100, help="seed value")
 
     return parser
 
@@ -32,7 +34,8 @@ def main(args):
     """
     main function
     """
-
+    np.random.seed(seed=args.seed)
+    random.seed(args.seed)
     # initialize genes
     initializer = BoardInit(args.nq, args.ng)
     genes = initializer.set_init_gene()
@@ -76,6 +79,7 @@ def main(args):
         if min_fitness[1] == 0:
             print("loop finished!")
             print(str(loop), 'fitness = ', str(min_fitness[1]))
+            print(min_fitness[0])
             break
 
         genes = copy.deepcopy(new_genes)
