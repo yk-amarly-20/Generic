@@ -1,13 +1,15 @@
 # create board
 import numpy as np
-from ..evaluation.evaluate import evaluate
+import sys
+sys.path.append('..')
+from evaluation.evaluate import evaluate
 
 class BoardInit():
     """
     initialize chess board
     """
 
-    def __init__(self, num_queen=8, num_children=50):
+    def __init__(self, num_queen=8, num_genes=50):
         """
         constructor
 
@@ -15,7 +17,7 @@ class BoardInit():
         ----------
         num_queen: int, default 8
             the numbers of queens
-        num_children: int, default 50
+        num_genes: int, default 50
             the numbers of children
 
         Notes
@@ -24,7 +26,8 @@ class BoardInit():
         """
 
         self.num_queen = num_queen
-        self.board = np.zeors((self.num_queen, self.num_queen), dtype=int)
+        self.num_genes = num_genes
+        self.board = np.zeros((self.num_queen, self.num_queen), dtype=int)
 
     def set_init_gene(self):
         """
@@ -33,7 +36,7 @@ class BoardInit():
 
         genes = []
 
-        for i in range(num_children):
+        for i in range(self.num_genes):
             gene = []
             queens = []
 
