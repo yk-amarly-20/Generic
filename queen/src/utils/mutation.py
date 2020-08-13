@@ -23,9 +23,7 @@ def mutate(genes, num_queen=8, num_genes=50):
     for i in range(num_genes // 2):
         gene_idx = random.randint(0, len(genes) - 1)
         position = random.randint(0, num_queen - 1)
-        value = random.randint(0, num_queen - 1)
-        print(genes[gene_idx])
-        print(genes[gene_idx][0][position])
+        value = random.randint(0, num_queen - 1) 
         genes[gene_idx][0][position] = value
 
     return genes

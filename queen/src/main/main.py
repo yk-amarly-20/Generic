@@ -3,8 +3,9 @@ import argparse
 import copy
 import mlflow
 import numpy as np
+import random
 import sys
-sys.path.append('..')
+sys.path.append('.')
 from utils.BoardInit import BoardInit
 from utils.cross_over import cross_over
 from utils.mutation import mutate
@@ -24,6 +25,9 @@ def make_parse():
     parser = argparse.ArgumentParser()
     parser.add_argument('--nq', type=int, default=8, help='the numbers of queens')
     parser.add_argument('--ng', type=int, default=50, help='the numbers of genes')
+    parser.add_argument('--seed', type=int, default=100, help="seed value")
+    parser.add_argument('--mlflow_uri', default='./mlruns')
+    parser.add_argument('--experiment_name', default='training')
 
     return parser
 
@@ -32,7 +36,8 @@ def main(args):
     """
     main function
     """
-
+    np.random.seed(seed=args.seed)
+    random.seed(args.seed)
     # initialize genes
     initializer = BoardInit(args.nq, args.ng)
     genes = initializer.set_init_gene()
@@ -76,9 +81,21 @@ def main(args):
         if min_fitness[1] == 0:
             print("loop finished!")
             print(str(loop), 'fitness = ', str(min_fitness[1]))
+            print(min_fitness[0])
             break
 
         genes = copy.deepcopy(new_genes)
+
+    mlflow.set_tracking_uri(args.mlflow_uri)
+    mlflow.set_experiment(args.experiment_name)
+    tracking = mlflow.tracking.MlflowClient()
+    experiment = tracking.get_experiment_by_name(args.experiment_name)
+
+    with mlflow.start_run(experiment_id=experiment.experiment_id, nested=True):
+        mlflow.log_param('the numbers of queens', args.nq)
+        mlflow.log_param('the numbers of genes', args.ng)
+        mlflow.log_param('seed', args.seed)
+        mlflow.log_metric('loop', loop)
 
 if __name__=='__main__':
     args = make_parse().parse_args()

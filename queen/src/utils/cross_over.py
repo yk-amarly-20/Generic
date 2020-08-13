@@ -35,7 +35,7 @@ def cross_over(gene_1, gene_2, num_queen=8):
 
     if random.randint(0, 1) == 0:
         new_queens_1 = gene_1[0][:alter_point]
-        new_queens_1 = gene_2[0][alter_point:]
+        new_queens_1 += gene_2[0][alter_point:]
         new_queens_2 = gene_2[0][:alter_point]
         new_queens_2 += list(gene_1[0][alter_point:])
         new_gene_1[0] = new_queens_1
